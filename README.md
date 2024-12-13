@@ -40,3 +40,8 @@ Install the binary (as root):
 ```
 install -m 755 ./sus /usr/bin
 ```
+
+If you're using bash-completion, install sus_completion.bash to /etc/bash_completion.d/ (as root):
+```
+install -m 644 ./sus_completion.bash /etc/bash_completion.d/sus_completion.bash
+```
