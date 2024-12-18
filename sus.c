@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     if (strcmp(argv[1], "-u") == 0 || strcmp(argv[1], "--user") == 0) {
         usr = 1;
         if (argc < 4) {
-            printf("Syntax erro6r.\nUsage: sus [-u user] [command]\n");
+            printf("Syntax error.\nUsage: sus [-u user] [command]\n");
             return 1;
         }
     }
