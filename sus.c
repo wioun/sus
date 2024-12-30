@@ -33,61 +33,61 @@ int main(int argc, char *argv[]) {
             printf("Usage: sus [-u user] [command]\n");
             return 1;
         }
-		usr = 1;
+        usr = 1;
     }
 
     /*| Command |*/
-	short usrarg; // count of arguments to specify a user ('-u user' (+2) or nothing (+0)).
-	if (usr == 0) usrarg = 1; else usrarg = 3; 
+    short usrarg; // count of arguments to specify a user ('-u user' (+2) or nothing (+0)).
+    if (usr == 0) usrarg = 1; else usrarg = 3; 
 
-	size_t cmdlen; // memory allocation for command.
+    size_t cmdlen; // memory allocation for command.
     for (int i = usrarg; i < argc; i++) cmdlen += strlen(argv[i]) + 1; // +1 for space.
-	char *cmd = malloc(cmdlen + 1); // +1 for '\0'.
-	if (cmd == NULL) {
+    char *cmd = malloc(cmdlen + 1); // +1 for '\0'.
+    if (cmd == NULL) {
 
         perror("malloc"); 
         exit(EXIT_FAILURE);
     }
 
-	size_t fcmdlen; // memory allocation for full command.
-	if (usr == 0) fcmdlen = cmdlen + strlen("su  -c ''") + strlen(DEFAULT_USER); // two spaces, yes.
-	else fcmdlen = cmdlen + strlen("su  -c ''") + strlen(argv[2]);
+    size_t fcmdlen; // memory allocation for full command.
+    if (usr == 0) fcmdlen = cmdlen + strlen("su  -c ''") + strlen(DEFAULT_USER); // two spaces, yes.
+    else fcmdlen = cmdlen + strlen("su  -c ''") + strlen(argv[2]);
     char *fcmd = malloc(fcmdlen);
-	if (fcmd == NULL) {
+    if (fcmd == NULL) {
 
         perror("malloc"); 
         exit(EXIT_FAILURE);
     }
 
-	cmd[0] = '\0'; // command itself.
-	for (int i = usrarg; i < argc; i++) {
+    cmd[0] = '\0'; // command itself.
+    for (int i = usrarg; i < argc; i++) {
 
-		if (i > usrarg) {
+        if (i > usrarg) {
 
-			strcat(cmd, " ");
-		}
-		strcat(cmd, argv[i]);
-	}
+            strcat(cmd, " ");
+        }
+        strcat(cmd, argv[i]);
+    }
     
     if (usr == 0) sprintf(fcmd, "su %s -c '%s'", DEFAULT_USER, cmd); // full command.
-	else sprintf(fcmd, "su %s -c '%s'", argv[2], cmd);
+    else sprintf(fcmd, "su %s -c '%s'", argv[2], cmd);
 
     /*| Execute |*/ 
-	pid_t pid = fork();
+    pid_t pid = fork();
     if (pid == -1) {
 
         perror("fork");
         return 1;
     } 
-	else if (pid == 0) {
+    else if (pid == 0) {
 
         // printf("fcmd: '%s'\ncmd: '%s'\nusr: %hd\n", fcmd, cmd, usr); // for debug.
         execl("/bin/sh", "sh", "-c", fcmd, (char *)NULL);
-		perror("execl");
-		free(cmd);
+        perror("execl");
+        free(cmd);
         exit(EXIT_FAILURE);
     } 
-	else {
+    else {
 
         wait(NULL);
     }
