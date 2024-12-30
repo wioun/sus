@@ -8,13 +8,13 @@ But unlike sudo, it asks for the target user's password instead of the current u
 ## How to use?
 For example, use:
 ```
-sus rm -rf /tmp/*
+sus whoami
 ```
-The root user is used by default.
+The root user is used by default (the `DEFAULT_USER` value in `sus.c`).
 
 To specify a user, use the -u argument:
 ```
-sus -u admin rm -rf /tmp/*
+sus -u admin whoami
 ```
 The argument can be specified only at the beginning, otherwise it will be interpreted as part of the command to be executed.
 
