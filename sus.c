@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
             exit(0);
 
         case 'v':
-            printf("SuS 1.2\nCopyright (C) Wioun 2024–2025, GNU GPL v3.\n"); 
+            printf("SuS 2.0\nCopyright (C) Wioun 2024–2025, GNU GPL v3.\n"); 
             exit(0);
 
         case 'u':
